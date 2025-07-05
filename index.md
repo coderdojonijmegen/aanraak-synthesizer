@@ -100,7 +100,7 @@ Haal de USB-kabel uit je computer voordat je verder gaat.
 
 In de volgende stappen maak je alle verbindingen precies zoals in het schema:
 
-![[Pico_synth_GP15.png]]
+![[images/Pico_synth_GP15.png]]
 
 
 Pak een kabeltje met een krokodillenklem aan het eind. Steek het pinnetje in het breadboard, vlak naast het laatste pinnetje aan de linkerkant van de Pico.
