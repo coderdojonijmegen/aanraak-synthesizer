@@ -1,5 +1,5 @@
 ---
-title: "Aanraakgevoelige synthesizer"
+title: "Python - Aanraakgevoelige synthesizer"
 date: 2025-07-05T15:51:01+02:00
 draft: false
 toc: true
@@ -7,19 +7,19 @@ headercolor: "teal-background"
 onderwerp: CircuitPython 
 ---
 
-Maak een synthesizer die geluid maakt als je een potloottekening aanraakt (met een Raspberry Pi Pico en CircuitPython).
+Maak een synthesizer die geluid maakt als je een potloodtekening aanraakt (met een Raspberry Pi Pico en CircuitPython).
 
 <!--more-->
 
 Om dingen aanraakgevoelig te maken, gebruiken we dit groene printplaatje, een Pico-microcontroller. Laten we beginnen met het ingebouwde LED-lampje van de Pico te laten knipperen.
 
-![[images/pico.jpg]]
+![Raspberry Pi Pico](images/pico.jpg)
 
 De Raspberry Pi Pico is een **microcontroller**, wat betekent dat het een heel eenvoudige computer is. Je kunt er inputs op aansluiten, zoals lichtsensoren, en outputs zoals motoren en lampen.
 
 Dit schema toont de 'pinout' van de Pico. Het vertelt je welke pinnen je kunt gebruiken en wat hun nummers zijn.
 
-![[images/pinout.png]]
+![Pinout](images/pinout.png)
 
 
 ### Software installeren
@@ -28,7 +28,7 @@ De Pico die je voor je hebt draait op Circuitpython. Dat is een smaakje Python v
 
 Thonny is een programma op je computer waarmee je kunt programmeren in de programmeertaal Python.
 
-![[images/thonny.png]]
+![Thonny](images/thonny.png)
 
 Download het op [thonny.org](http://thonny.org): kies de juiste versie voor jouw computer door in de rechterbovenhoek Windows, Mac of Linux te selecteren. Download het bestand, installeer het en open vervolgens het programma.
 
@@ -39,7 +39,7 @@ print('Hallo wereld!')
 ```
 
 Klik vervolgens op de groene afspeelknop:
-![[images/groene-knop.png]]
+![groene knop Thonny](images/groene-knop.png)
 
 Nu wordt de code uitgevoerd. Het resultaat verschijnt in het onderste deel van het Thonny-venster.
 
@@ -100,7 +100,7 @@ Haal de USB-kabel uit je computer voordat je verder gaat.
 
 In de volgende stappen maak je alle verbindingen precies zoals in het schema:
 
-![[images/Pico_synth_GP15.png]]
+![Pico Synth](images/Pico_synth_GP15.png)
 
 
 Pak een kabeltje met een krokodillenklem aan het eind. Steek het pinnetje in het breadboard, vlak naast het laatste pinnetje aan de linkerkant van de Pico.
@@ -381,4 +381,4 @@ Naast al deze mogelijke inputs, is er ook een wereld aan mogelijke outputs. Je k
 Of je kunt een video laten starten en stoppen als mensen iets aanraken, of lampen aan- of uitzetten, of iets mechanisch laten bewegen, of een rookmachine starten…
 
 
-{{< licentie rel="http://creativecommons.org/licenses/by-nc-sa/4.0/">}}
+{{< licentie rel="http://creativecommons.org/licenses/by-nc-sa/4.0/" >}}
