@@ -19,12 +19,16 @@ De Raspberry Pi Pico is een **microcontroller**, wat betekent dat het een heel e
 
 Dit schema toont de 'pinout' van de Pico. Het vertelt je welke pinnen je kunt gebruiken en wat hun nummers zijn.
 
+![[images/pinout.png]]
+
 
 ### Software installeren
 
 De Pico die je voor je hebt draait op Circuitpython. Dat is een smaakje Python voor microcontrollers. 
 
 Thonny is een programma op je computer waarmee je kunt programmeren in de programmeertaal Python.
+
+![[images/thonny.png]]
 
 Download het op [thonny.org](http://thonny.org): kies de juiste versie voor jouw computer door in de rechterbovenhoek Windows, Mac of Linux te selecteren. Download het bestand, installeer het en open vervolgens het programma.
 
@@ -35,6 +39,7 @@ print('Hallo wereld!')
 ```
 
 Klik vervolgens op de groene afspeelknop:
+![[images/groene-knop.png]]
 
 Nu wordt de code uitgevoerd. Het resultaat verschijnt in het onderste deel van het Thonny-venster.
 
@@ -94,6 +99,8 @@ De gaatjes langs de rode en blauwe lijnen zijn verticaal met elkaar verbonden. R
 Haal de USB-kabel uit je computer voordat je verder gaat.
 
 In de volgende stappen maak je alle verbindingen precies zoals in het schema:
+
+![[Pico_synth_GP15.png]]
 
 
 Pak een kabeltje met een krokodillenklem aan het eind. Steek het pinnetje in het breadboard, vlak naast het laatste pinnetje aan de linkerkant van de Pico.
