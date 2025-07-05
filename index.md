@@ -13,7 +13,7 @@ Maak een synthesizer die geluid maakt als je een potloottekening aanraakt (met e
 
 Om dingen aanraakgevoelig te maken, gebruiken we dit groene printplaatje, een Pico-microcontroller. Laten we beginnen met het ingebouwde LED-lampje van de Pico te laten knipperen.
 
-![[pico.jpg]]
+![[images/pico.jpg]]
 
 De Raspberry Pi Pico is een **microcontroller**, wat betekent dat het een heel eenvoudige computer is. Je kunt er inputs op aansluiten, zoals lichtsensoren, en outputs zoals motoren en lampen.
 
