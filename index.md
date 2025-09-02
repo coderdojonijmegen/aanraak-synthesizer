@@ -17,20 +17,18 @@ Om dingen aanraakgevoelig te maken, gebruiken we dit groene printplaatje, een Pi
 
 De Raspberry Pi Pico is een **microcontroller**, wat betekent dat het een heel eenvoudige computer is. Je kunt er inputs op aansluiten, zoals lichtsensoren, en outputs zoals motoren en lampen.
 
-Dit schema toont de 'pinout' van de Pico. Het vertelt je welke pinnen je kunt gebruiken en wat hun nummers zijn.
+Het schema hieronder is de 'pinout' van de Pico. Je kunt er aan zien welke pinnen je kunt gebruiken en wat hun nummers zijn.
 
 ![Pinout](images/pinout.png)
 
 
 ### Software installeren
 
-De Pico die je voor je hebt draait op Circuitpython. Dat is een smaakje Python voor microcontrollers. 
-
-Thonny is een programma op je computer waarmee je kunt programmeren in de programmeertaal Python.
+De Pico die je voor je hebt draait op Circuitpython. Dat is een smaakje Python voor microcontrollers. Je kunt de Pico programmeren met een programma op je computer dat Thonny heet.
 
 ![Thonny](images/thonny.png)
 
-Download het op [thonny.org](http://thonny.org): kies de juiste versie voor jouw computer door in de rechterbovenhoek Windows, Mac of Linux te selecteren. Download het bestand, installeer het en open vervolgens het programma.
+Download Thonny op [thonny.org](http://thonny.org): kies de juiste versie voor jouw computer door in de rechterbovenhoek Windows, Mac of Linux te selecteren. Download het bestand, installeer het en start het programma.
 
 Typ deze regel in het bovenste venster van Thonny:
 
@@ -50,36 +48,47 @@ Nu gaan we met behulp van Thonny code op het Pico-bordje uitvoeren in plaats van
 
 Sluit de Pico aan op je computer via een USB-kabel.
 
-Selecteer 'CircuitPython (Raspberry Pi Pico)' in de rechteronderhoek van het Thonny-scherm. (Als je die optie niet ziet in de lijst, controleer dan of je Raspberry Pi Pico goed is aangesloten.)
+Selecteer 'CircuitPython' in de rechteronderhoek van het Thonny-scherm. (Als je die optie niet ziet in de lijst, controleer dan of je Raspberry Pi Pico goed is aangesloten.)
 
-Wanneer je nu code uitvoert, zal het op de Pico worden uitgevoerd. Kopieer deze code naar Thonny en klik op de groene afspeelknop:
+Wanneer je nu code uitvoert, dan gebeurt dat op de Pico. Dat betekent dat we Pico dingen kunnen laten doen, zoals het ingebouwde LED-lampje op de Pico aan en uit kunnen laten gaan. 
+
+Kopieer onderstaande code naar Thonny om Python te laten weten dat we opdrachten willen geven aan de pinnen van de Pico:
 
 ```Python
 import board
 import digitalio
+```
+
+Daaronder zet je deze regels om de ingebouwde LED aan te zetten:
+
+```Python
 led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
 led.value = True
 ```
+Klik op de groene afspeelknop. Het lampje op de Pico zou nu aan moeten gaan. Tenzij het al aan was! In dat geval kun je het uitzetten door de laatste regel te veranderen:
 
-Het lampje op de Pico zou nu aan moeten gaan. Tenzij het al aan was! In dat geval kun je het uitzetten door de laatste regel te veranderen:
 ```Python
 led.value = False
 ```
 
-Je kunt ook de LED steeds laten knipperen zonder te wachten tot je het programma opnieuw uitvoert. Voeg deze regels toe aan de vorige code en voer het uit:
+Je kunt ook de LED voortdurend laten knipperen, zonder te steeds zelf het programma moet uitvoeren. Voeg deze regels toe aan de vorige code en voer het uit:
 ```Python
 import time
 while True:
-	led.value = True
-	time.sleep(2)
-	led.value = False
-	time.sleep(2)
+    led.value = True
+    time.sleep(2.0)
+    led.value = False
+    time.sleep(2.0)
 ```
 
 Zorg ervoor dat je **ook de witruimte** overneemt (4 spaties), want dat is belangrijk in Python.
 
-Kun je het LEDje ook tien keer zo snel laten knipperen?
+De *while-loop* doet steeds opnieuw hetzelfde: zet het LEDje aan, wacht twee seconden, zet het LEDje uit, wacht twee seconden en begin dan weer opnieuw met het LEDje aanzetten.
+
+- Het knipperen gaat nu nog heel langzaam. Probeer het LEDje twee keer zo snel te laten knipperen!
+
+- Kun je het LEDje ook *twintig keer* zo snel laten knipperen?
 
 
 ### Een pin van de Pico aanraakgevoelig maken
@@ -90,6 +99,8 @@ Aan de zijkanten van de Pico zitten veel pinnetjes die we kunnen gebruiken om al
 
 De Pico is vastgeklikt in wat een breadboard heet (het witte ding met allemaal kleine gaatjes).
 
+![Pico op een breadboard](images/Pico_op_breadboard.png)
+
 De gaatjes op het breadboard zijn onderling verbonden in rijen van vijf, zoals de oranje rechthoek in het schema aangeeft.
 
 Als we draadjes en onderdelen met elkaar willen verbinden, hoeven we ze alleen maar in gaatjes op dezelfde rij te steken.
@@ -98,22 +109,24 @@ De gaatjes langs de rode en blauwe lijnen zijn verticaal met elkaar verbonden. R
 
 Haal de USB-kabel uit je computer voordat je verder gaat.
 
-In de volgende stappen maak je alle verbindingen precies zoals in het schema:
+In de volgende stappen maak je alle verbindingen precies zoals in dit schema:
 
 ![Pico Synth](images/Pico_synth_GP15.png)
 
 
-Pak een kabeltje met een krokodillenklem aan het eind. Steek het pinnetje in het breadboard, vlak naast het laatste pinnetje aan de linkerkant van de Pico.
+- Pak een kabeltje met een krokodillenklem aan het eind. Steek het pinnetje in het breadboard, vlak naast het laatste pinnetje aan de linkerkant van de Pico.
 
-Steek één pootje van een weerstand (dat gestreepte dingetje) in dezelfde rij.
+- Steek één pootje van een weerstand (dat gestreepte dingetje) in dezelfde rij.
 
-Steek het andere pootje van de weerstand in een van de gaatjes naast de **blauwe** lijn.
+- Steek het andere pootje van de weerstand in een van de gaatjes naast de **blauwe** lijn.
 
-Gebruik een draadje om beide blauwe kolommen van het breadboard met elkaar te verbinden. Zorg ervoor dat je het NIET in een gaatje naast de rode lijn steekt!
+- Gebruik een draadje om **beide blauwe kolommen** van het breadboard met elkaar te verbinden. Zorg ervoor dat je het NIET in een gaatje naast de rode lijn steekt!
 
 ### 🖍️ Maak je interactieve tekening!
 
 Maak nu een tekening. Het mag een simpele vorm zijn. Zorg dat de tekening tot aan de rand van het papier gaat, zodat je er een krokodillenklem op kunt aansluiten, zoals in dit voorbeeld:
+
+![potloodtekening](images/graphite_tekening.png)
 
 We gebruiken een 9B grafietpotlood, dat is zacht en geleidt goed.
 Breng een dikke laag grafiet aan. Als je lijnen te dun zijn, maakt de tekening geen goede verbinding met de microcontroller.
@@ -122,7 +135,54 @@ Als je klaar bent, klem dan de krokodillenklem die uit je breadboard komt vast o
 
 ### 🔌 Start je programma – Zet het LEDje aan met aanraking
 
-Open je bestand in Thonny en zet daar onderstaande code in (de uitleg met # ervoor hoef je niet over te nemen): 
+Open Thonny en zet daar deze regels in, direct onder ```import time```:
+
+```Python
+import touchio
+aanraak_pin = touchio.TouchIn(board.GP15)
+```
+
+Nu kun je de Pico vragen om in de gaten te houden of de tekening wordt aangeraakt.
+Haal de regels ná ```while True:``` weg en zet daar deze regels voor in de plaats:
+
+```Python
+    print(aanraak_pin.raw_value)
+    time.sleep(0.05)
+```
+(Let er weer op dat de vier spaties ervoor staan, want zo weet Python dat deze regels bij de ```while True:``` horen.)
+
+Als je dit programmaatje aanzet door op de groene knop te drukken, dan zie je in Thonny een grafiek die weergeeft hoeveel stroom er 'weglekt' via je tekening. (Als je geen grafiek ziet, klik dan bovenaan in Thonny op het menu 'View' en dan 'Plotter'.)
+
+![plotter](images/plotter.png)
+
+Op basis van die waarden kunnen we de Pico iets laten doen, bijvoorbeeld het LEDje alleen aan laten gaan als de tekening wordt aangeraakt.
+
+Vervang de regel ```print(aanraak_pin.raw_value)``` door een *if-statement*:
+
+```Python
+    if aanraak_pin.raw_value > 3000:
+        led.value = True
+    else:
+        led.value = False
+```
+(Let ook weer op de extra spaties die aangeven wat bij het if-statement hoort en wat niet.)
+
+
+Start deze code op de Pico door op de start-knop te drukken.
+
+✅ **Test het**: Als je je tekening aanraakt, gaat het ingebouwde LEDje aan!
+
+
+Als je merkt dat het LEDje ook aanstaat als je je tekening niet aanraakt (vals alarm dus), kies dan een hogere drempelwaarde in plaats van 3000, bijvoorbeeld 7000.
+
+
+### 🚨 Geen vals alarm
+
+Als we de Pico meer dan één pin-met-tekening in de gaten willen laten houden, dan wordt de kans op vals alarm wat groter. Om dat te voorkomen gaan we bij elke aanraking even opnieuw checken of het wel echt is. Dat heet een 'de-bounce' (het komt bij knoppen vandaan, die kunnen een beetje wiebelen).
+
+In plaats van het if-statement kunnen we dan kijken of de 'knop' ingedrukt is of juist is losgelaten. 
+
+Dit is de complete code die je in Thonny kunt gebruiken: 
 
 ```Python
 import time
@@ -135,47 +195,31 @@ from adafruit_debouncer import Debouncer
 time.sleep(1.0)
 
 # Stel GP15 in als aanraakpin
-touch_pin = touchio.TouchIn(board.GP15)
-button = Debouncer(touch_pin)
+aanraak_pin = touchio.TouchIn(board.GP15)
+
+# debounce 
+knop = Debouncer(aanraak_pin)
 
 # Zet het ingebouwde LEDje klaar
 led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
 
 while True:
-    button.update()
+    knop.update()
     
-    if button.rose:
-        led.value = True
-        
-    if button.fell:
-        led.value = False
+    # als de knop is losgelaten, zet dan de LED uit
+    if knop.fell: led.value = False
+    
+    # als de knop wordt aangeraakt, zet dan de LED aan
+    if knop.rose: led.value = True
 
 ```
 
-Start deze code op de Pico door in Thonny op de start-knop te drukken.
+Als de Pico af en toe het LEDje ook aandoet als de tekening *niet* wordt aangeraakt, dan kun je nog steeds een eigen drempelwaarde opgeven. Dat doe je op deze manier, bóven ```while True```: 
 
-Als hij stroom krijgt, zou het LED-lampje op de Pico een paar keer moeten knipperen. Als dat niet gebeurt, controleer dan of alle draden in de juiste rijen zitten.
-
-Je zou nu je tekening moeten kunnen aanraken en zien dat het LED-lampje op het bordje verandert!
-
-✅ **Test het**: Als je je tekening aanraakt, gaat het ingebouwde LEDje aan!
-
-  
-
-### Meer aanraakgevoelige tekeningen toevoegen
-
-Laten we twee extra aanraakgevoelige gebieden aan je kunstwerk toevoegen.
-
-Voeg eerst twee sets weerstanden en kabels toe aan het breadboard, zoals in dit schema.
-
-De nieuwe weerstanden verbinden de 7e (GP5) en de 12e pin (GP9) met de blauwe lijn. (Die nummers staan ook op het breadboard.)
-
-Teken nu de extra ‘knoppen’. Je tekening mag alles zijn, zolang er maar vier aparte delen zijn in totaal. Elk deel moet een verbinding hebben met de rand zodat je er een krokodillenklem op kunt aansluiten (het makkelijkst is als ze allemaal aan dezelfde rand beginnen). Je mag de lijnen tekenen zoals je wilt, zolang er maar minstens een vingerbreedte tussen de vier delen zit.
-
-Als je de tekeningen hebt gemaakt, maak je de krokodillenklemmen eraan vast.
-
-
+```Python
+aanraak_pin.threshold = 5100
+```
 
 ### 🎵 Nu mèt geluid!
 
@@ -183,9 +227,11 @@ We kunnen je interactieve kunstwerk interessanter maken door een extra uitgang t
 
 We gaan een kleine versterkte speaker op de Pico aansluiten.
 
-Neem twee kabels met aan de ene kant krokodillenklemmen en aan de andere kant male connectors.
+Neem twee kabels met aan de ene kant krokodillenklemmen en aan de andere kant stekkertjes.
 
-Verbind één krokodillenklem met de bovenkant van de stekker van de speaker en één met het onderste deel, zoals dit >>
+Verbind één krokodillenklem met de bovenkant van de plug van de speaker en één met het onderste deel, op deze manier >>
+
+![Twee klemmen op één plug](images/audio_plug.jpg)
 
 Neem het andere uiteinde van de kabel die aan de tip van de stekker zit en steek die in het breadboard, in de rij naast de onderste rechterpin van de Pico.
 
@@ -234,16 +280,58 @@ while True:
 
 ✅ **Test**: Raak je tekening aan → hoor een melodie én zie het LEDje branden!
 
+
+### ✏️ Meer aanraakgevoelige tekeningen toevoegen
+
+Laten we drie extra aanraakgevoelige tekeningen aan je kunstwerk toevoegen.
+
+Voeg eerst drie sets weerstanden en kabels toe aan het breadboard, zoals in dit schema:
+
+![alt text](images/Pico-synth-met-4-klemmen.png)
+
+De nieuwe weerstanden verbinden de eerste (GP0), zevende (GP5) en twaalfde pin (GP9) met de blauwe lijn. (Die nummers staan ook op het breadboard.)
+
+Teken nu de extra ‘knoppen’. Je tekening mag vanalles zijn, zolang er maar een verbinding is aan de rand zodat je er een krokodillenklem op kunt aansluiten.
+
+Als je de tekeningen hebt gemaakt, klem je de krokodillenklemmen eraan vast.
+
+
+### Voeg de nieuwe pins toe aan de code
+
+Nu de krokodillenklemmen en weerstanden zijn aangesloten, moeten we de pinnen nog toevoegen aan de code. De regels die je al hebt staan voor de eerste pin kun je kopiëren en plakken en dan aanpassen. 
+
+- Kopiëer de regel die begint met ```aanraak_pin``` en plak hem drie keer daaronder.
+- Verander vervolgens elke ```aanraak_pin``` in een variabele met een nummer, dus ```aanraak_pin1``` tot en met ```aanraak_pin4```.
+- Verander de pin-nummers op het eind, zodat je pins GP0, GP5, GP9 en GP15 hebt.
+
+Vervolgens heb je ook drie extra regels nodig voor de knoppen.
+- Kopiëer en plak deze regel drie keer: ```knop = Debouncer(aanraak_pin)```
+- Verander elke ```knop``` in een variabele met een nummer, dus ```knop1``` tot en met ```knop4```.
+- Laat elk van die regels verwijzen naar een aanraak-pin met een nummer.
+
+Nu hoef je alleen nog de knoppen in de while-loop toe te voegen.
+- Kopiëer en plak de regel met ```update``` drie keer.
+- Zet de nummers erbij (dus ```knop``` wordt ```knop1``` tot en met ```knop4```).
+- Kopiëer en plak ook de regels met ```led.value```, twee voor elke knop.
+- Voeg ook aan die regels de nummers toe.
+
+✅ **Test het**: Nu zou de LED aan moeten gaan bij elk van je tekeningen!
+
+Mocht dat niet zo zijn, controleer dan of je de draadjes op de juiste pinnen hebt aangesloten (de eerste, zevende, twaalfde en twintigste pin aan de linkerkant van de Pico).
+
+
+
+
 ## 🎵 Nog meer interessante geluiden
 
 Voeg deze regels toe bovenaan in je script:
 
 ```Python
-touch_pin2 = touchio.TouchIn(board.GP9)
-touch_pin3 = touchio.TouchIn(board.GP5)
+aanraak_pin2 = touchio.TouchIn(board.GP9)
+aanraak_pin3 = touchio.TouchIn(board.GP5)
 
-button2 = Debouncer(touch_pin2)
-button3 = Debouncer(touch_pin3)
+button2 = Debouncer(aanraak_pin2)
+button3 = Debouncer(aanraak_pin3)
 ```
 
 Voeg deze functies toe:
@@ -374,11 +462,9 @@ Vond je het leuk om je tekening aanraakgevoelig te maken? Dan zul je blij zijn t
 Je kunt je eigen geleidende verf maken en op van alles aanbrengen. Je kunt ook kopertape, metalen draad, aluminiumfolie of zelfs geleidende stof gebruiken.
 
 Water en metalen voorwerpen geleiden ook elektriciteit, dus die werken ook goed.
-Planten en bloemen bevatten veel water, dus zelfs die kun je aanraakgevoelig maken!
+Planten en bloemen bevatten veel water, dus zelfs die kun je aanraakgevoelig maken. Je zou een synthesizer van bloemen kunnen maken!
 
-Naast al deze mogelijke inputs, is er ook een wereld aan mogelijke outputs. Je kunt een animatie op een tekening of schilderij projecteren, zoals in het eerdergenoemde kunstwerk Awake.
-
-Of je kunt een video laten starten en stoppen als mensen iets aanraken, of lampen aan- of uitzetten, of iets mechanisch laten bewegen, of een rookmachine starten…
-
+![Singing plant](images/singingplant.png)
+[Singing plant](https://www.instructables.com/Singing-plant-Make-your-plant-sing-with-Arduino-/) door Mads Hobye.
 
 {{< licentie rel="http://creativecommons.org/licenses/by-nc-sa/4.0/" >}}
