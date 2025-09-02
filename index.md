@@ -128,7 +128,7 @@ Maak nu een tekening. Het mag een simpele vorm zijn. Zorg dat de tekening tot aa
 
 ![potloodtekening](images/graphite_tekening.png)
 
-We gebruiken een 9B grafietpotlood, dat is zacht en geleidt goed.
+We gebruiken een 9B grafietpotlood, dat is heel zacht en geleidt elektriciteit goed.
 Breng een dikke laag grafiet aan. Als je lijnen te dun zijn, maakt de tekening geen goede verbinding met de microcontroller.
 
 Als je klaar bent, klem dan de krokodillenklem die uit je breadboard komt vast op het papier.
@@ -317,24 +317,13 @@ Nu hoef je alleen nog de knoppen in de while-loop toe te voegen.
 
 ✅ **Test het**: Nu zou de LED aan moeten gaan bij elk van je tekeningen!
 
-Mocht dat niet zo zijn, controleer dan of je de draadjes op de juiste pinnen hebt aangesloten (de eerste, zevende, twaalfde en twintigste pin aan de linkerkant van de Pico).
-
-
-
+Mocht dat niet zo zijn, controleer dan of je de draadjes en weerstanden op de juiste pinnen hebt aangesloten (de eerste, zevende, twaalfde en twintigste pin aan de linkerkant van de Pico).
 
 ## 🎵 Nog meer interessante geluiden
 
-Voeg deze regels toe bovenaan in je script:
+Voor de nieuwe pins kunnen we ook meer interessante geluiden toevoegen.
 
-```Python
-aanraak_pin2 = touchio.TouchIn(board.GP9)
-aanraak_pin3 = touchio.TouchIn(board.GP5)
-
-button2 = Debouncer(aanraak_pin2)
-button3 = Debouncer(aanraak_pin3)
-```
-
-Voeg deze functies toe:
+Zet deze code in je script, boven de while-loop:
 
 ```Python
 async def arpeggio():
@@ -358,14 +347,11 @@ Vervang de `while`-loop in je script door deze versie:
 
 ```Python
 while True:
-    button.update()
-    button2.update()
-    button3.update()
 
-    if button.rose:
+    if button1.rose:
         led.value = True
         asyncio.run(threeArpeggios())
-    if button.fell:
+    if button1.fell:
         led.value = False
 
     if button2.rose:
@@ -382,9 +368,9 @@ Je zou nu verschillende geluiden moeten horen als je je tekening aanraakt!
 
 Laten we een andere output proberen: een LED met verschillende kleuren! Die kan reageren met verschillende kleuren op elk apart deel van je tekening!
 
-De Neopixel LED heeft vier pootjes. Je moet ze misschien een beetje buigen om ze in het breadboard te krijgen.
+Haal eerst de USB-kabel even uit je computer.
 
-Haal één van de draden van de batterij uit het breadboard (zorg dat ze tijdens het werken niks raken, ook de Pico niet).
+De Neopixel LED heeft vier pootjes. Je moet ze misschien een beetje buigen om ze in het breadboard te krijgen.
 
 Houd de LED voor je zodat **het langste pootje het derde is van links**. Dit is belangrijk want als je de LED verkeerd in het breadboard steekt dan kan hij stukgaan.
 
@@ -465,6 +451,7 @@ Water en metalen voorwerpen geleiden ook elektriciteit, dus die werken ook goed.
 Planten en bloemen bevatten veel water, dus zelfs die kun je aanraakgevoelig maken. Je zou een synthesizer van bloemen kunnen maken!
 
 ![Singing plant](images/singingplant.png)
+
 [Singing plant](https://www.instructables.com/Singing-plant-Make-your-plant-sing-with-Arduino-/) door Mads Hobye.
 
 {{< licentie rel="http://creativecommons.org/licenses/by-nc-sa/4.0/" >}}
