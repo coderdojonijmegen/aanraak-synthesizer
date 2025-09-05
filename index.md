@@ -72,7 +72,7 @@ Klik op de groene afspeelknop. Het lampje op de Pico zou nu aan moeten gaan. Ten
 led.value = False
 ```
 
-Je kunt ook de LED voortdurend laten knipperen, zonder te steeds zelf het programma moet uitvoeren. Voeg deze regels toe aan de vorige code en voer het uit:
+Je kunt ook de LED voortdurend laten knipperen, zonder steeds zelf het programma moet uitvoeren. Voeg deze regels toe aan de vorige code en voer het uit:
 ```Python
 import time
 while True:
@@ -223,7 +223,7 @@ aanraak_pin.threshold = 5100
 
 ### 🎵 Nu mèt geluid!
 
-We kunnen je interactieve kunstwerk interessanter maken door een extra uitgang toe te voegen: geluid!
+Alleen dat ene LEDje aan laten gaan is natuurlijk niet zo spannend. We kunnen je interactieve kunstwerk interessanter maken door een extra uitgang toe te voegen: geluid!
 
 We gaan een kleine versterkte speaker op de Pico aansluiten.
 
@@ -235,50 +235,50 @@ Verbind één krokodillenklem met de bovenkant van de plug van de speaker en é�
 
 Neem het andere uiteinde van de kabel die aan de tip van de stekker zit en steek die in het breadboard, in de rij naast de onderste rechterpin van de Pico.
 
+![alt text](images/pico_audioplug.png)
+
 Steek de andere kabel in een gaatje naast de blauwe lijn.
 
 Zet de speaker aan.
 
-Voeg onderstaande code toe aan je script. Zet eerst dit stuk bovenaan:
+Voeg onderstaande code toe aan je script, bovenaan je script maar ná de andere imports:
 
 ```Python
 import audiopwmio
 import synthio
-import asyncio
 
+# maak een audio-output op pin GP16
 audio = audiopwmio.PWMAudioOut(board.GP16)
+
+# start een synthesizer
 synth = synthio.Synthesizer(sample_rate=22050)
 audio.play(synth)
 
-async def threeArpeggios():
-    notes = [196, 294, 392, 494, 587, 220, 330, 440, 523, 659, 262, 392, 523, 659, 784]
-    for i in range(len(notes)):
-        note = synthio.Note(notes[i])
-        synth.press(note)
-        await asyncio.sleep(0.03)
-        synth.release(note)
-        await asyncio.sleep(0.01)
-        
-        if i % 5 == 4:
-            await asyncio.sleep(0.2)
+# functie om eem willekeurige toon te laten horen
+def bliep():
+    # toon kiezen
+    note = synthio.Note(random.randint(20, 700))
+    synth.press(note) # toon 'indrukken'
+    time.sleep(0.5) # halve seconde wachten
+    synth.release(note) # toon 'loslaten'
 ```
 
-Pas dan je `while True:` aan:
+Vervolgens roepen we die functie aan als de tekening wordt aangeraakt, dus in `if knop.rose`:
 
 ```Python
 while True:
-    button.update()
+    knop.update()
 
-    if button.rose:
+    if knop.rose:
         led.value = True
-        asyncio.run(threeArpeggios())
+        bliep()
 
-    if button.fell:
+    if knop.fell:
         led.value = False
 
 ```
 
-✅ **Test**: Raak je tekening aan → hoor een melodie én zie het LEDje branden!
+✅ **Test**: Raak je tekening aan → hoor een geluid én zie het LEDje branden!
 
 
 ### ✏️ Meer aanraakgevoelige tekeningen toevoegen
@@ -291,7 +291,7 @@ Voeg eerst drie sets weerstanden en kabels toe aan het breadboard, zoals in dit 
 
 De nieuwe weerstanden verbinden de eerste (GP0), zevende (GP5) en twaalfde pin (GP9) met de blauwe lijn. (Die nummers staan ook op het breadboard.)
 
-Teken nu de extra ‘knoppen’. Je tekening mag vanalles zijn, zolang er maar een verbinding is aan de rand zodat je er een krokodillenklem op kunt aansluiten.
+Teken nu de extra ‘knoppen’. Je tekening mag van alles zijn, zolang er maar een verbinding is aan de rand zodat je er een krokodillenklem op kunt aansluiten.
 
 Als je de tekeningen hebt gemaakt, klem je de krokodillenklemmen eraan vast.
 
@@ -300,145 +300,168 @@ Als je de tekeningen hebt gemaakt, klem je de krokodillenklemmen eraan vast.
 
 Nu de krokodillenklemmen en weerstanden zijn aangesloten, moeten we de pinnen nog toevoegen aan de code. De regels die je al hebt staan voor de eerste pin kun je kopiëren en plakken en dan aanpassen. 
 
-- Kopiëer de regel die begint met ```aanraak_pin``` en plak hem drie keer daaronder.
+- Kopieer de regel die begint met ```aanraak_pin``` en plak hem drie keer daaronder.
 - Verander vervolgens elke ```aanraak_pin``` in een variabele met een nummer, dus ```aanraak_pin1``` tot en met ```aanraak_pin4```.
 - Verander de pin-nummers op het eind, zodat je pins GP0, GP5, GP9 en GP15 hebt.
 
 Vervolgens heb je ook drie extra regels nodig voor de knoppen.
-- Kopiëer en plak deze regel drie keer: ```knop = Debouncer(aanraak_pin)```
+- Kopieer de regel ```knop = Debouncer(aanraak_pin)``` en plak hem drie keer daaronder. 
 - Verander elke ```knop``` in een variabele met een nummer, dus ```knop1``` tot en met ```knop4```.
-- Laat elk van die regels verwijzen naar een aanraak-pin met een nummer.
+- Laat elk van die regels verwijzen naar een andere aanraak-pin met een nummer.
 
-Nu hoef je alleen nog de knoppen in de while-loop toe te voegen.
-- Kopiëer en plak de regel met ```update``` drie keer.
+Nu hoef je alleen nog de knoppen **in de while-loop** toe te voegen.
+- Kopieer en plak de regel met ```update``` drie keer.
 - Zet de nummers erbij (dus ```knop``` wordt ```knop1``` tot en met ```knop4```).
-- Kopiëer en plak ook de regels met ```led.value```, twee voor elke knop.
-- Voeg ook aan die regels de nummers toe.
+- Kopieer en plak ook beide if-statements drie keer, zodat je er twee hebt voor elke knop. Zet er wel steeds een witregel tussen om het een beetje leesbaar te houden.
+- Voeg aan elke ```knop.rose``` en ```knop.fell``` een nummer toe.
 
 ✅ **Test het**: Nu zou de LED aan moeten gaan bij elk van je tekeningen!
 
-Mocht dat niet zo zijn, controleer dan of je de draadjes en weerstanden op de juiste pinnen hebt aangesloten (de eerste, zevende, twaalfde en twintigste pin aan de linkerkant van de Pico).
+Mocht dat niet zo zijn, controleer dan of je de draadjes en weerstanden goed in het breadboard hebt gestoken (naast de eerste, zevende, twaalfde en twintigste pin aan de linkerkant van de Pico).
 
 ## 🎵 Nog meer interessante geluiden
 
 Voor de nieuwe pins kunnen we ook meer interessante geluiden toevoegen.
 
-Zet deze code in je script, boven de while-loop:
+Zet deze drie functies in je script, boven de while-loop:
 
 ```Python
-async def arpeggio():
+def arpeggio():
     for j in range(10, 124, 3):
         synth.press(j)
-        await asyncio.sleep(0.02)
+        time.sleep(0.02)
         synth.release(j)
     for j in range(124, 10, -3):
         synth.press(j)
-        await asyncio.sleep(0.02)
+        time.sleep(0.02)
         synth.release(j)
 
-async def bleepUp():
+def bloep():
     for i in range(12, 120, 12):
         synth.press(i)
-        await asyncio.sleep(0.02)
+        time.sleep(0.02)
         synth.release(i)
+
+def drieArpeggios():
+    notes = [196, 294, 392, 494, 587, 220, 330, 440, 523, 659, 262, 392, 523, 659, 784]
+    for i in range(len(notes)):
+        note = synthio.Note(notes[i])
+        synth.press(note)
+        time.sleep(0.03)
+        synth.release(note)
+        time.sleep(0.01)
+        
+        if i % 5 == 4:
+            time.sleep(0.2)
 ```
 
-Vervang de `while`-loop in je script door deze versie:
+Roep die functies aan in de `while`-loop, elk bij een ander if-statement:
 
 ```Python
-while True:
-
-    if button1.rose:
+    if knop2.rose:
         led.value = True
-        asyncio.run(threeArpeggios())
-    if button1.fell:
-        led.value = False
-
-    if button2.rose:
-        asyncio.run(arpeggio())
-
-    if button3.rose:
-        asyncio.run(bleepUp())
+        arpeggio()
+```
+```Python
+    if knop3.rose:
+        led.value = True
+        bloep()
+```
+```Python
+    if knop4.rose:
+        led.value = True
+        drieArpeggios()
 ```
 
-Je zou nu verschillende geluiden moeten horen als je je tekening aanraakt!
+Je zou nu voor elke tekening verschillende geluiden moeten horen!
 
 
-## 🌈 Voeg kleur toe met de Neopixel LED
+## 🎨 Voeg kleur toe met de Neopixel LED
 
-Laten we een andere output proberen: een LED met verschillende kleuren! Die kan reageren met verschillende kleuren op elk apart deel van je tekening!
+Laten we een andere output proberen: een LED met verschillende kleuren! Deze LED kan op elk aparte tekening reageren met verschillende kleuren!
 
 Haal eerst de USB-kabel even uit je computer.
 
-De Neopixel LED heeft vier pootjes. Je moet ze misschien een beetje buigen om ze in het breadboard te krijgen.
+De Neopixel-LED heeft vier pootjes. Je moet ze misschien een beetje buigen om ze in het breadboard te krijgen.
 
-Houd de LED voor je zodat **het langste pootje het derde is van links**. Dit is belangrijk want als je de LED verkeerd in het breadboard steekt dan kan hij stukgaan.
+⚠️ Houd de LED voor je zodat het **pootje met het gele bandje links zit** en **het langste pootje de derde is**. Dit is belangrijk want als je de LED verkeerd in het breadboard steekt dan kan hij stukgaan. 
+
+Je ziet ook dat de LED aan één kant een beetje plat is (je ziet dat het makkelijkst van bovenaf). Die zijde komt aan de zijkant van het breadboard.
+
+![alt text](images/Neopixel_geel-bandje.png)
 
 Steek de LED nu in het breadboard zodat:
 
-- het eerste (linker) pootje in dezelfde rij zit als pin 14 van de Pico (GP21)
+- het linker pootje (met het gele bandje) in dezelfde rij zit als pin 14 van de Pico (GP21)
 - het tweede pootje in de rode kolom zit
 - het derde (langste) pootje in de blauwe kolom zit
-- het laatste pootje gebruiken we niet. Buig dat gewoon om zodat het uitsteekt over de rand.
+- het laatste pootje gebruiken we niet, die mag je laten uitsteken over de rand van het breadboard.
 
-Controleer goed dat de pootjes van de LED elkaar niet raken.
+Controleer dat de pootjes van de LED elkaar niet raken.
 
 Sluit de USB-kabel weer aan.
 
-Zet bovenaan in je script deze regels:
+Zet bovenaan in je script, ná de andere imports, deze regels:
 ```Python
 import neopixel
 from rainbowio import colorwheel
 
-neopixel_led = neopixel.NeoPixel(board.GP21, 1, brightness=0.4)
-
-class Colours:
-    def __init__(self, initial_colours):
-        self.values = initial_colours
+# hiermee laten we de Pico weten waar de LED zit
+neopixel_led = neopixel.NeoPixel(board.GP21, 1, brightness=0.7)
 ```
 
-Voeg Neopixel-code toe (ook boven `while True:`):
+Je kunt zelf bepalen welke kleur de Neopixel-LED laat zien met de functie `fill`:  
 
 ```Python
-colours = Colours([0, 0, 0, 0])
-
-async def changeNeopixel(np, colours):
-    while True:
-        if colours.values[3] != 0:
-            neopixel_led.fill( colorwheel((time.monotonic()*90)%255) )
-        else:
-            neopixel_led.fill((colours.values[0], colours.values[1], colours.values[2]))
-        await asyncio.sleep(0)
-
+    neopixel_led.fill((0, 127, 255))
 ```
 
-Voeg kleuren toe aan je knoppen:
-```Python
-    if button.rose:
-        led.value = True
-        colours.values[3] = 1
-        asyncio.run(threeArpeggios())
+De drie getallen in de functie zijn de waarden voor groen, rood en blauw. In het voorbeeld hierboven staat groen uit, rood is 127, dus half aan en blauw staat met 255 vol aan. Het resultaat is roze.
 
-    if button.fell:
-        led.value = False
-        colours.values[3] = 0
+💡 Geef nu de LED bij elke aangeraakte tekening een andere kleur!
+(Tip: zet de regel met `fill` boven de regel die het geluid aanzet, dan gaat het licht meteen aan.)
 
-    if button2.rose:
-        colours.values[0] = 30
-        asyncio.run(arpeggio())
-
-    if button3.rose:
-        colours.values[2] = 50
-        asyncio.run(bleepUp())
-```
-
-✅ **Laatste stap hier**: Voeg aan het eind van je script toe:
+Als je dat voor elkaar hebt, kun je `fill` opnieuw aanroepen bij elke `fell`, om de LED uit te laten gaan als je de tekening loslaat:
 
 ```Python
-asyncio.run(changeNeopixel(neopixel_led, colours))
+neopixel_led.fill([0, 0, 0])
 ```
 
-Als je dit script draait en dan je aanraakgevoelige tekening aanraakt, zou je kleuren moeten zien!
+✅ **Test het!** Als je dit script draait en dan je aanraakgevoelige tekening aanraakt, zou je kleuren moeten zien!
+
+
+## 🌈 Alle kleuren van de regenboog (en veel herrie)
+
+Je kunt de LED ook alle kleuren van de regenboog langs laten gaan zolang je een tekening blijft aanraken. 
+
+We gebruiken daarvoor een `while`-loop die één van de if-statements met `rose` vervangt.
+
+Je kunt een if-statement weghalen, maar je kunt er ook met hashtags commentaar van te maken dat de Pico negeert:
+
+```Python
+#     if knop1.rose:
+#         led.value = True
+#         bliep()
+#         neopixel_led.fill((0, 127, 255)) # G, R, B
+```
+
+Daarboven zet je deze `while-loop`:
+
+```Python
+   # Doe dit zolang de waarde van de 'sensor' hoger is dan 4000:
+   while aanraak_pin1.raw_value > 4000:
+
+        # elke 0,09 seconde veranderen we de kleur
+        neopixel_led.fill( colorwheel((time.monotonic()*90)%255) )
+
+        # en vergeet niet steeds een ander geluidje te laten horen :-) 
+        noot = aanraak_pin1.raw_value / 100
+        synth.press(noot)
+        time.sleep(0.01)
+        synth.release(noot)
+```
+
+✅ Als het goed is dan zie je nu bij één rekening alle kleuren van de regenboog voorbij komen en steeds andere geluiden!
 
 
 ## ✅ Klaar!
@@ -453,5 +476,20 @@ Planten en bloemen bevatten veel water, dus zelfs die kun je aanraakgevoelig mak
 ![Singing plant](images/singingplant.png)
 
 [Singing plant](https://www.instructables.com/Singing-plant-Make-your-plant-sing-with-Arduino-/) door Mads Hobye.
+
+
+### Gebruikte materialen:
+
+- Raspberry Pi Pico microcontroller
+- Breadboard (formaat half)
+- 4x Weerstanden 1MΩ
+- 3x Jumper-draadjes
+- 6x Kabels met krokodillenklem aan één kant, stekkertje aan andere kant
+- USB-kabel micro-USB naar USB-A (indien nodig ook USB-C-converter)
+- Versterkte mini-speaker (met 3.5mm jack-plug)
+- Neopixel-LED
+- tekenpapier
+- 9B grafietpotlood
+
 
 {{< licentie rel="http://creativecommons.org/licenses/by-nc-sa/4.0/" >}}
