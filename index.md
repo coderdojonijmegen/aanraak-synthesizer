@@ -246,6 +246,7 @@ Voeg onderstaande code toe aan je script, bovenaan je script maar ná de andere 
 ```Python
 import audiopwmio
 import synthio
+import random
 
 # maak een audio-output op pin GP16
 audio = audiopwmio.PWMAudioOut(board.GP16)
