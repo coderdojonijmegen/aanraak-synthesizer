@@ -481,7 +481,7 @@ Planten en bloemen bevatten veel water, dus zelfs die kun je aanraakgevoelig mak
 
 ### Gebruikte materialen:
 
-- Raspberry Pi Pico microcontroller
+- Raspberry Pi Pico microcontroller (met de Adafruit-libraries adafruit_debouncer.mpy, adafruit_ticks.mpy en neopixel.mpy erop)
 - Breadboard (formaat half)
 - 4x Weerstanden 1MΩ
 - 3x Jumper-draadjes
